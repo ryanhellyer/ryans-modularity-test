@@ -19,17 +19,23 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 
 function init()
 {
-    $properties = PluginProperties::new(__FILE__);
-    $package = Package::new($properties);
-
-    // Register modules here
-    $package->addModule(new RyansModule\RyansModule());
-
-//    $package->connect(\RyansModularityOther\init());
-
-//    //$package->connect(new \RyansModularityOther\RyansOtherModule);
-
+    $package = package();
     $package->boot();
 }
 
 add_action('plugins_loaded', __NAMESPACE__ . '\\init');
+
+function package(): Package {
+    static $package;
+
+    if (!$package) {
+        $properties = PluginProperties::new(__FILE__);
+        $package = Package::new($properties);
+
+        // Register modules here
+        $package->addModule(new RyansModule\RyansModule());
+        $package->connect(\RyansModularityOther\init());
+    }
+
+    return $package;
+}
