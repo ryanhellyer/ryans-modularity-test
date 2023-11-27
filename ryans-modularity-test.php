@@ -25,7 +25,9 @@ function init()
     // Register modules here
     $package->addModule(new RyansModule\RyansModule());
 
-    //$package->connect(new \RyansModularityOther\RyansOtherModule);
+//    $package->connect(\RyansModularityOther\init());
+
+//    //$package->connect(new \RyansModularityOther\RyansOtherModule);
 
     $package->boot();
 }

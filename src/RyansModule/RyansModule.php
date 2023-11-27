@@ -14,14 +14,27 @@ class RyansModule implements ExecutableModule
 
     public function run(ContainerInterface $container): bool
     {
-        add_filter('the_content', [$this, 'theContent']);
+        /** @var ContentModifer $ryanSharedService **/
+        $ryanSharedService = $container->get('ryan.shared.service');
+
+        $textFromOtherPlugin = $ryanSharedService->text();
+        echo $textFromOtherPlugin;
+        die;
 
         return true;
     }
 
     public function theContent()
     {
-        return '<p>Ryans\' Inpsyde Modularity test plugin is working!</p>';
-        // Would also like to use forUseInOtherPlugin() from the other plugin here.
+        $textFromOtherPlugin = 'Connector is not working yet!';
+
+        /** @var ContentModifer $ryanSharedService **/
+        $ryanSharedService = $this->container->get('ryan.shared.service');
+
+        $textFromOtherPlugin = $ryanSharedService->text();
+        echo $textFromOtherPlugin;
+        die; // killing execution for testing purposes.
+
+        return  $textFromOtherPlugin;
     }
 }
